@@ -1,0 +1,41 @@
+#%Module#####################################################
+## chgres build module for Theia
+#############################################################
+
+# Loading Intel Compiler Suite
+module reset
+module rm netcdf
+module load ncarenv/1.3
+module load intel/19.0.2
+module load mpt/2.19
+module load ncarcompilers/0.5.0
+module load netcdf/4.6.3
+module load pnetcdf/1.11.1
+
+# Loading nceplibs modules
+export NCEPLIBS_DIR=/glade/p/ral/jntp/GMTB/tools/NCEPlibs/20190307/intel-18.0.5/mpt-2.19
+export NEMSIO_INC=${NCEPLIBS_DIR}/include
+export NEMSIO_LIB=${NCEPLIBS_DIR}/lib/libnemsio_d.a
+export BACIO_LIB4=${NCEPLIBS_DIR}/lib/libbacio_4.a
+export SP_LIBd=${NCEPLIBS_DIR}/lib/libsp_v2.0.2_d.a
+export W3NCO_LIBd=${NCEPLIBS_DIR}/lib/libw3nco_d.a
+export SFCIO=/glade/work/turuncu/UFS/NCEP_LIBS/sfcio_v1.0.0
+export SFCIO_INC4="${SFCIO}/include"
+export SFCIO_LIB4="-L${SFCIO}/lib -lsfcio_v1.0.0_4"
+export SIGIO=/glade/work/turuncu/UFS/NCEP_LIBS/sigio_v2.1.0
+export SIGIO_INC4="${SIGIO}/include"
+export SIGIO_LIB4="-L${SIGIO}/lib -lsigio"
+
+export ESMF_DIR=/glade/work/dunlap/ESMF-INSTALL/8.0.0bs38
+export ESMF_INC=${ESMF_DIR}/include
+export ESMF_BIN=${ESMF_DIR}/bin/binO/Linux.intel.64.mpt.default
+export ESMF_LIB=${ESMF_DIR}/lib/libO/Linux.intel.64.mpt.default
+export ESMF_MOD=${ESMF_DIR}/mod/modO/Linux.intel.64.mpt.default
+export ESMFMKFILE=${ESMF_DIR}/lib/libO/Linux.intel.64.mpt.default/esmf.mk
+export PATH=${ESMF_DIR}/bin/binO/Linux.intel.64.mpt.default:$PATH
+export LD_LIBRARY_PATH ${ESMF_DIR}/lib/libO/Linux.intel.64.mpt.default:$LD_LIBRARY_PATH
+
+export FCOMP=mpif90
+export FFLAGS="-O3 -fp-model precise -g -traceback -r8 -i4 -qopenmp -convert big_endian -assume byterecl"
+# for debugging
+#export FFLAGS="-O0 -g -traceback -r8 -i4 -qopenmp -convert big_endian -check bounds -warn unused -assume byterecl"

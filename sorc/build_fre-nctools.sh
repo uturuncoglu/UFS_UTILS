@@ -33,10 +33,21 @@ set -x
 #Original setup is for cray so for now require input only on a different platform.
 
 set +x
+if [ $system_site = "cray" ]; then
 module list
 module use ../../../modulefiles/fv3gfs                  > /dev/null 2>&1
 module load fre-nctools.${target} > /dev/null 2>&1
 module list
+elif [ $system_site = "cheyenne" ]; then
+module reset
+module rm netcdf
+module load ncarenv/1.3
+module load intel/19.0.2
+module load mpt/2.19
+module load ncarcompilers/0.5.0
+module load netcdf/4.6.3
+module load pnetcdf/1.11.1
+fi
 set -x
 
 MPICH_UNEX_BUFFER_SIZE=256m
@@ -50,7 +61,11 @@ if [ $system_site = "cray" ]; then
   NETCDF=${NETCDF_DIR}
 fi
 
-alias make="make HDF5_HOME=${HDF5}  NETCDF_HOME=${NETCDF} NC_BLKSZ=64K SITE=${system_site} -f fre-nctools.mk"
+if [ $system_site = "cray" ]; then
+  alias make="make HDF5_HOME=${HDF5}  NETCDF_HOME=${NETCDF} NC_BLKSZ=64K SITE=${system_site} -f fre-nctools.mk"
+elif [ $system_site = "cheyenne" ]; then
+  alias make="make NETCDF_HOME=${NETCDF} NC_BLKSZ=64K SITE=${system_site} -f fre-nctools.mk"
+fi
 
 set +x
 echo "////////////////////////////////////////////////////////////////////////////////"

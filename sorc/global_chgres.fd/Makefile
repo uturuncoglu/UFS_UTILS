@@ -39,7 +39,7 @@ nstio_module.o : nstio_module.f90
 nsst_chgres.o : nsst_chgres.f90
 	$(FC90) $(FFLAGS) $(RECURS) -c nsst_chgres.f90
 chgres_utils.o:	physcons.o funcphys.o chgres_utils.f90
-	$(FC90) $(FFLAGS) $(RECURS) $(INCMOD) -c chgres_utils.f90
+	$(FC90) $(FFLAGS) $(RECURS) $(INCMOD) -free -c chgres_utils.f90
 nrlmsise00_sub.o:	nrlmsise00_sub.f90
 	$(FC90) $(FFLAGS)  $(RECURS) -c nrlmsise00_sub.f90
 funcphys.o:     funcphys.f90 physcons.o machine_8.o
